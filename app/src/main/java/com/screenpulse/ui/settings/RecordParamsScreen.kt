@@ -19,6 +19,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +37,7 @@ import com.screenpulse.viewmodel.MainViewModel
  */
 @Composable
 fun RecordParamsScreen(vm: MainViewModel) {
-    val saved by vm.recordParams
+    val saved by vm.recordParams.collectAsState()
     var params by remember { mutableStateOf(saved) }
 
     fun save() = vm.saveParams(params)

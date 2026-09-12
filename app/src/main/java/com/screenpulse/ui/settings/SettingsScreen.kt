@@ -19,6 +19,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,10 +40,10 @@ import com.screenpulse.viewmodel.MainViewModel
 @Composable
 fun SettingsScreen(vm: MainViewModel) {
     val context = LocalContext.current
-    val themeMode by vm.themeMode
-    val floatingEnabled by vm.floatingEnabled
-    val shortcutEnabled by vm.shortcutEnabled
-    val compressLevel by vm.compressLevel
+    val themeMode by vm.themeMode.collectAsState()
+    val floatingEnabled by vm.floatingEnabled.collectAsState()
+    val shortcutEnabled by vm.shortcutEnabled.collectAsState()
+    val compressLevel by vm.compressLevel.collectAsState()
 
     var micGranted by remember {
         mutableStateOf(

@@ -15,11 +15,9 @@ class ScreenPulseApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannels()
-        // WorkManager 通过 getWorkManagerConfiguration() 注入自定义 WorkerFactory，
-        // 使 VideoCompressWorker 可用构造注入。
     }
 
-    override fun getWorkManagerConfiguration(): Configuration =
+    override val workManagerConfiguration: Configuration =
         Configuration.Builder()
             .setWorkerFactory(RecordWorkerFactory(applicationContext))
             .build()

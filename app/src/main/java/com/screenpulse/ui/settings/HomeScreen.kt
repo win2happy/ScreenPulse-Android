@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(vm: MainViewModel) {
     val context = LocalContext.current
-    val params by vm.recordParams
+    val params by vm.recordParams.collectAsState()
     var state by remember { mutableStateOf(ScreenRecordForegroundService.currentState) }
     var countdown by remember { mutableStateOf(0) }
     // 授权成功后等待倒计时完成再启动

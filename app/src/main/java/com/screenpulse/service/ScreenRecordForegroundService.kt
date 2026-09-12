@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 /**
@@ -207,11 +208,11 @@ class ScreenRecordForegroundService : Service() {
             releaseAll()
         }
         // 触发 WorkManager 后台压缩（不阻塞 UI）
-        lastRecordPath?.let { path ->
+        lastRecordPath?.let { path: String ->
             val level = runCatching {
-                AppPreferencesRepo(this).compressLevel.first()
+                runBlocking { AppPreferencesRepo(this@ScreenRecordForegroundService).compressLevel.first() }
             }.getOrDefault(com.screenpulse.repository.CompressLevel.BALANCED)
-            com.screenpulse.util.VideoCompressor.enqueue(this, File(path), level)
+            com.screenpulse.util.VideoCompressWorker.enqueue(this, File(path), level)
         }
     }
 

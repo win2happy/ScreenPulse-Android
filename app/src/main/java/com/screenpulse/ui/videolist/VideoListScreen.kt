@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +48,7 @@ import com.screenpulse.viewmodel.VideoListViewModel
 @Composable
 fun VideoListScreen(vm: VideoListViewModel) {
     val context = LocalContext.current
-    val videos by vm.videos
+    val videos by vm.videos.collectAsState()
     var renameTarget by remember { mutableStateOf<VideoItem?>(null) }
     var deleteTarget by remember { mutableStateOf<VideoItem?>(null) }
     var renameText by remember { mutableStateOf("") }
