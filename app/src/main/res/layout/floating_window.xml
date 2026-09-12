@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 悬浮窗布局：原生 View，禁止 Compose 渲染，降低内存开销 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/float_window_bg"
+    android:padding="8dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- 录制/暂停/继续 -->
+        <ImageButton
+            android:id="@+id/fw_btn_record"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/float_record"
+            android:src="@drawable/ic_record" />
+
+        <!-- 停止 -->
+        <ImageButton
+            android:id="@+id/fw_btn_stop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/float_stop"
+            android:src="@drawable/ic_stop" />
+
+        <!-- 一键隐藏 -->
+        <ImageButton
+            android:id="@+id/fw_btn_close"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/float_close"
+            android:src="@drawable/ic_close" />
+    </LinearLayout>
+</FrameLayout>

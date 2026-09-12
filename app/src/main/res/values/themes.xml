@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用主题：跟随系统的浅色基础，配合 Compose 内部切换 -->
+    <style name="Theme.ScreenPulse" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="android:statusBarColor">@color/brand_green</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

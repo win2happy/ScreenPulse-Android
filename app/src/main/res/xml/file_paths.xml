@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FileProvider 路径映射：分享/预览录屏文件 -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 外部 Movies 目录下的 ScreenPulse 文件夹 -->
+    <external-path
+        name="screenpulse_videos"
+        path="Movies/ScreenPulse/" />
+    <!-- 应用专属外部目录 -->
+    <external-files-path
+        name="screenpulse_appfiles"
+        path="ScreenPulse/" />
+</paths>

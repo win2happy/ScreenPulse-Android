@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScreenPulse瞬录</string>
+    <string name="app_tagline">纯净 · 零广告 · 全功能免费</string>
+
+    <!-- 导航 -->
+    <string name="tab_record">录制</string>
+    <string name="tab_params">参数</string>
+    <string name="tab_files">文件</string>
+    <string name="tab_settings">设置</string>
+
+    <!-- 悬浮窗按钮 -->
+    <string name="float_record">录制/暂停</string>
+    <string name="float_stop">停止</string>
+    <string name="float_close">隐藏</string>
+
+    <!-- 通知 -->
+    <string name="notify_record_start">正在启动录制…</string>
+    <string name="notify_record_paused">录制已暂停</string>
+    <string name="notify_stop">停止</string>
+</resources>

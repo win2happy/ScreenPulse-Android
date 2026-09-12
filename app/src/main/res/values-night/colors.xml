@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色模式：降低绿色饱和度，防止刺眼 -->
+    <color name="brand_green">#66BB6A</color>
+    <color name="accent_green">#81C784</color>
+    <color name="light_green_bg">#1B311D</color>
+
+    <!-- 悬浮窗：跟随系统的深色态 -->
+    <color name="float_bg_light">#E61B311D</color>
+    <color name="float_icon_light">#81C784</color>
+    <!-- 悬浮窗深色态固定值（手动主题选择时使用） -->
+    <color name="float_bg_dark">#E61B311D</color>
+    <color name="float_icon_dark">#81C784</color>
+</resources>

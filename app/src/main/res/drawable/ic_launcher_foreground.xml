@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 自适应启动图标前景：绿色圆 + 白色录屏圆点 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:scaleX="0.5" android:scaleY="0.5" android:pivotX="54" android:pivotY="54">
+        <path
+            android:fillColor="@color/white"
+            android:pathData="M54,20A34,34 0 1,0 54,88A34,34 0 1,0 54,20M54,40A14,14 0 1,1 54,68A14,14 0 1,1 54,40" />
+    </group>
+</vector>
