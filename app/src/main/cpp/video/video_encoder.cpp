@@ -52,9 +52,9 @@ bool VideoEncoder::init(const VideoParams& params, const RegionRect& region) {
         LOGE("video configure failed: %d", st);
         return false;
     }
-    inputSurface_ = AMediaCodec_createInputSurface(videoCodec_);
-    if (!inputSurface_) {
-        LOGE("create input surface failed");
+    media_status_t surfaceSt = AMediaCodec_createInputSurface(videoCodec_, &inputSurface_);
+    if (surfaceSt != AMEDIA_OK || !inputSurface_) {
+        LOGE("create input surface failed: %d", surfaceSt);
         return false;
     }
     return true;
@@ -89,7 +89,7 @@ bool VideoEncoder::setupMuxer(const std::string& path) {
         std::string cmd = "mkdir -p " + dir;
         ::system(cmd.c_str());
     }
-    muxer_ = AMediaMuxer_new(out.c_str(), AMEDIA_MUXER_OUTPUT_FORMAT_MPEG_4);
+    muxer_ = AMediaMuxer_new(out.c_str(), AMEDIAMUXER_OUTPUT_FORMAT_MPEG_4);
     outputPath_ = out;
     return muxer_ != nullptr;
 }
@@ -139,7 +139,7 @@ void VideoEncoder::videoLoop() {
         ssize_t idx = AMediaCodec_dequeueOutputBuffer(videoCodec_, &info, 10'000);
         if (idx >= 0) {
             // 先读数据再释放，避免悬垂指针
-            uint8_t* buf = info.size > 0 ? AMediaCodec_getOutputBuffer(videoCodec_, idx) : nullptr;
+            uint8_t* buf = info.size > 0 ? AMediaCodec_getOutputBuffer(videoCodec_, idx, nullptr) : nullptr;
 
             if (info.flags & AMEDIACODEC_BUFFER_FLAG_CODEC_CONFIG) {
                 // codec specific 数据：注册视频 track
@@ -205,7 +205,7 @@ void VideoEncoder::audioLoop() {
             AMediaCodecBufferInfo info{};
             ssize_t oIdx = AMediaCodec_dequeueOutputBuffer(audioCodec_, &info, 0);
             while (oIdx >= 0) {
-                uint8_t* obuf = info.size > 0 ? AMediaCodec_getOutputBuffer(audioCodec_, oIdx) : nullptr;
+                uint8_t* obuf = info.size > 0 ? AMediaCodec_getOutputBuffer(audioCodec_, oIdx, nullptr) : nullptr;
                 if (info.flags & AMEDIACODEC_BUFFER_FLAG_CODEC_CONFIG) {
                     if (!hasAudioTrack_) {
                         audioTrack_ = AMediaMuxer_addTrack(muxer_, AMediaCodec_getOutputFormat(audioCodec_));
@@ -279,7 +279,7 @@ std::string VideoEncoder::stop() {
         ssize_t oIdx;
         while ((oIdx = AMediaCodec_dequeueOutputBuffer(videoCodec_, &info, 5'000)) >= 0) {
             if (info.size > 0 && muxerStarted_ && videoTrack_ >= 0)
-                AMediaMuxer_writeSampleData(muxer_, videoTrack_, AMediaCodec_getOutputBuffer(videoCodec_, oIdx), &info);
+                AMediaMuxer_writeSampleData(muxer_, videoTrack_, AMediaCodec_getOutputBuffer(videoCodec_, oIdx, nullptr), &info);
             AMediaCodec_releaseOutputBuffer(videoCodec_, oIdx, false);
             if (info.flags & AMEDIACODEC_BUFFER_FLAG_END_OF_STREAM) break;
         }
