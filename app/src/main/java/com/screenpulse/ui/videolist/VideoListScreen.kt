@@ -55,7 +55,7 @@ fun VideoListScreen(vm: VideoListViewModel) {
 
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text("录屏文件", style = MaterialTheme.typography.titleLarge, Modifier.weight(1f))
+            Text("录屏文件", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
             IconButton(onClick = { vm.refresh() }) {
                 Icon(Icons.Filled.Refresh, "刷新")
             }
