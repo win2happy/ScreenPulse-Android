@@ -99,10 +99,10 @@ jobs:
         run: |
           if [ -n "${{ github.event.inputs.tag }}" ]; then
             echo "Tag provided (${{ github.event.inputs.tag }}): building signed release APK"
-            ./gradlew assembleRelease
+            ./gradlew assembleRelease -Psp.useFFmpeg=false
           else
             echo "No tag: building debug APK for compile test"
-            ./gradlew assembleDebug
+            ./gradlew assembleDebug -Psp.useFFmpeg=false
           fi
 
       - name: Upload APK artifact

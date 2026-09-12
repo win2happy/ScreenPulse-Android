@@ -52,6 +52,16 @@ android {
     buildFeatures {
         compose = true
     }
+    defaultConfig {
+        // CI 或无 FFmpeg 预编译库时，通过 -Psp.useFFmpeg=false 关闭
+        val useFFmpeg = (findProperty("sp.useFFmpeg")?.toString()?.toBoolean() ?: true)
+        externalNativeBuild {
+            cmake {
+                arguments += listOf("-DSP_USE_FFMPEG=${if (useFFmpeg) "ON" else "OFF"}")
+            }
+        }
+    }
+
     externalNativeBuild {
         cmake {
             path = file("src/main/cpp/CMakeLists.txt")
