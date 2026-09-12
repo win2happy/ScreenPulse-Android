@@ -33,25 +33,14 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          gradle-version: '8.9'
 
       - name: Generate Gradle wrapper JAR
         run: |
           if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
-            echo "gradle-wrapper.jar not found, generating..."
-            curl -sL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
-            unzip -q /tmp/gradle.zip -d /tmp
-            /tmp/gradle-8.9/bin/gradle wrapper --gradle-version 8.9
-            rm -rf /tmp/gradle.zip /tmp/gradle-8.9
+            echo "gradle-wrapper.jar not found, generating with installed Gradle..."
+            gradle wrapper --gradle-version 8.9
           else
             echo "gradle-wrapper.jar already exists."
           fi
