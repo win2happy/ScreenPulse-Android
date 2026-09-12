@@ -44,6 +44,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Generate Gradle wrapper JAR
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "gradle-wrapper.jar not found, generating..."
+            curl -sL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+            unzip -q /tmp/gradle.zip -d /tmp
+            /tmp/gradle-8.9/bin/gradle wrapper --gradle-version 8.9
+            rm -rf /tmp/gradle.zip /tmp/gradle-8.9
+          else
+            echo "gradle-wrapper.jar already exists."
+          fi
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
