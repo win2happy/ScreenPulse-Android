@@ -22,8 +22,7 @@ object PermissionUtils {
     const val REQ_NOTIF = 102
 
     fun hasMic(context: Context): Boolean =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
-            == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
 
     fun requestMic(activity: Activity) {
         ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECORD_AUDIO), REQ_MIC)
@@ -52,7 +51,6 @@ object PermissionUtils {
     /** Android 13+ 通知权限 */
     fun hasNotification(context: Context): Boolean =
         if (Build.VERSION.SDK_INT >= 33)
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
-                == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
         else true
 }

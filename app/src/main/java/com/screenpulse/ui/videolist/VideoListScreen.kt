@@ -77,7 +77,8 @@ fun VideoListScreen(vm: VideoListViewModel) {
             }
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(videos, key = { it.path }) { item ->
+                items(count = videos.size, key = { videos[it].path }) { index ->
+                    val item = videos[index]
                     VideoCard(
                         item = item,
                         onPlay = {
