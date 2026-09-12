@@ -17,6 +17,8 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <fcntl.h>
+#include <unistd.h>
 
 namespace sp {
 
@@ -89,7 +91,13 @@ bool VideoEncoder::setupMuxer(const std::string& path) {
         std::string cmd = "mkdir -p " + dir;
         ::system(cmd.c_str());
     }
-    muxer_ = AMediaMuxer_new(out.c_str(), AMEDIAMUXER_OUTPUT_FORMAT_MPEG_4);
+    // 打开文件描述符供 NDK 26+ AMediaMuxer_new(fd, format) 使用
+    muxerFd_ = ::open(out.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (muxerFd_ < 0) {
+        LOGE("failed to open output file: %s", out.c_str());
+        return false;
+    }
+    muxer_ = AMediaMuxer_new(muxerFd_, AMEDIAMUXER_OUTPUT_FORMAT_MPEG_4);
     outputPath_ = out;
     return muxer_ != nullptr;
 }
@@ -306,6 +314,7 @@ void VideoEncoder::destroy() {
 
     if (muxerStarted_) { AMediaMuxer_stop(muxer_); muxerStarted_ = false; }
     if (muxer_) { AMediaMuxer_delete(muxer_); muxer_ = nullptr; }
+    if (muxerFd_ >= 0) { ::close(muxerFd_); muxerFd_ = -1; }
     if (videoCodec_) { AMediaCodec_stop(videoCodec_); AMediaCodec_delete(videoCodec_); videoCodec_ = nullptr; }
     if (audioCodec_) { AMediaCodec_stop(audioCodec_); AMediaCodec_delete(audioCodec_); audioCodec_ = nullptr; }
     if (inputSurface_) { ANativeWindow_release(inputSurface_); inputSurface_ = nullptr; }

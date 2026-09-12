@@ -95,6 +95,7 @@ private:
 
     // ---- 封装 ----
     AMediaMuxer* muxer_ = nullptr;
+    int muxerFd_ = -1;
     ssize_t videoTrack_ = -1;
     ssize_t audioTrack_ = -1;
     bool muxerStarted_ = false;
